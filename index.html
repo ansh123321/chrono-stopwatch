@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#080811">
+    <meta name="description" content="CHRONO — A precision stopwatch designed for every millisecond.">
+
+    <title>CHRONO — Precision Stopwatch</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <div class="background-grid" aria-hidden="true"></div>
+    <div class="ambient-glow glow-one" aria-hidden="true"></div>
+    <div class="ambient-glow glow-two" aria-hidden="true"></div>
+
+    <header class="topbar">
+        <a href="#" class="brand" aria-label="Chrono home">
+            <span class="brand-icon">C</span>
+            <span>CHRONO<span class="brand-dot">.</span></span>
+        </a>
+
+        <div class="topbar-right">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="status-label">PRECISION MODE</span>
+        </div>
+    </header>
+
+    <main class="app-container">
+
+        <section class="intro">
+            <p class="eyebrow">
+                <span class="eyebrow-line"></span>
+                TIME YOUR MOMENT
+            </p>
+
+            <h1>Every millisecond<span> matters.</span></h1>
+
+            <p class="intro-description">
+                A precision stopwatch for focus, performance, and everything
+                in between.
+            </p>
+        </section>
+
+        <section class="stopwatch-panel" aria-label="Stopwatch">
+
+            <div class="panel-header">
+                <div>
+                    <span class="panel-label">STOPWATCH</span>
+                    <span class="panel-subtitle">HIGH-RESOLUTION TIMING</span>
+                </div>
+
+                <div class="live-indicator">
+                    <span class="live-indicator-dot"></span>
+                    <span id="statusText">READY</span>
+                </div>
+            </div>
+
+            <div class="timer-area">
+                <div class="timer-decoration" aria-hidden="true"></div>
+
+                <p class="timer-caption">ELAPSED TIME</p>
+
+                <div
+                    class="timer-display"
+                    id="timerDisplay"
+                    role="timer"
+                    aria-label="Elapsed time"
+                    aria-live="off"
+                >
+                    <span id="hours">00</span><span class="time-separator">:</span><span id="minutes">00</span><span class="time-separator">:</span><span id="seconds">00</span><span class="decimal-point">.</span><span class="milliseconds" id="milliseconds">00</span>
+                </div>
+
+                <div class="timer-units" aria-hidden="true">
+                    <span>HOURS</span>
+                    <span>MINUTES</span>
+                    <span>SECONDS</span>
+                    <span>1/100 SEC</span>
+                </div>
+
+                <div class="timer-divider">
+                    <span></span>
+                    <span class="divider-center"></span>
+                    <span></span>
+                </div>
+
+                <div class="session-info">
+                    <div class="session-item">
+                        <span class="session-label">SESSION</span>
+                        <span class="session-value" id="sessionNumber">01</span>
+                    </div>
+
+                    <div class="session-item">
+                        <span class="session-label">LAPS RECORDED</span>
+                        <span class="session-value" id="lapCount">00</span>
+                    </div>
+
+                    <div class="session-item">
+                        <span class="session-label">BEST LAP</span>
+                        <span class="session-value best-lap-value" id="bestLap">--:--.--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+
+                <button
+                    type="button"
+                    class="control-button secondary-button"
+                    id="resetButton"
+                    aria-label="Reset stopwatch (R)"
+                    disabled
+                >
+                    <span class="button-icon" aria-hidden="true">↺</span>
+                    <span>Reset</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="control-button primary-button"
+                    id="startButton"
+                    aria-label="Start stopwatch (Space)"
+                >
+                    <span class="button-icon" id="startIcon" aria-hidden="true">▶</span>
+                    <span id="startButtonText">Start timer</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="control-button secondary-button"
+                    id="lapButton"
+                    aria-label="Record lap (L)"
+                    disabled
+                >
+                    <span class="button-icon" aria-hidden="true">⊕</span>
+                    <span>Lap</span>
+                </button>
+
+            </div>
+
+            <div class="keyboard-hint">
+                <span>QUICK CONTROLS</span>
+                <div><kbd>SPACE</kbd> Start / Pause</div>
+                <div><kbd>R</kbd> Reset</div>
+                <div><kbd>L</kbd> Record lap</div>
+            </div>
+
+        </section>
+
+        <section class="laps-panel" aria-labelledby="lapsHeading">
+
+            <div class="laps-header">
+                <div>
+                    <p class="eyebrow">
+                        <span class="eyebrow-line"></span>
+                        YOUR PERFORMANCE
+                    </p>
+                    <h2 id="lapsHeading">Lap history<span>.</span></h2>
+                </div>
+
+                <span class="lap-counter" id="lapCounter">00 LAPS</span>
+            </div>
+
+            <div class="lap-table">
+
+                <div class="lap-table-header">
+                    <span>LAP</span>
+                    <span>SPLIT TIME</span>
+                    <span>TOTAL TIME</span>
+                    <span>PERFORMANCE</span>
+                </div>
+
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon" aria-hidden="true">◷</div>
+                    <p class="empty-title">Every second starts somewhere.</p>
+                    <p class="empty-description">
+                        Start the timer and record your first lap.
+                    </p>
+                </div>
+
+                <div class="lap-list" id="lapList"></div>
+
+            </div>
+
+            <div class="laps-footer">
+                <span id="lapFooterText">NO LAPS RECORDED YET</span>
+
+                <button
+                    type="button"
+                    class="clear-laps-button"
+                    id="clearLapsButton"
+                    disabled
+                >
+                    Clear laps <span aria-hidden="true">↗</span>
+                </button>
+            </div>
+
+        </section>
+
+        <section class="shortcuts-panel" aria-label="Keyboard shortcuts">
+            <div class="shortcuts-title">
+                <span class="shortcuts-icon" aria-hidden="true">⌘</span>
+                <div>
+                    <h2>Built for your flow.</h2>
+                    <p>Keep your hands on the keyboard.</p>
+                </div>
+            </div>
+
+            <div class="shortcut">
+                <kbd>SPACE</kbd>
+                <span>Start / Pause</span>
+            </div>
+
+            <div class="shortcut">
+                <kbd>R</kbd>
+                <span>Reset</span>
+            </div>
+
+            <div class="shortcut">
+                <kbd>L</kbd>
+                <span>Record lap</span>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <a href="#" class="footer-brand">CHRONO<span>.</span></a>
+
+        <p>Made for every millisecond.</p>
+
+        <span class="footer-year">© 2026 CHRONO</span>
+    </footer>
+
+</body>
+</html>
